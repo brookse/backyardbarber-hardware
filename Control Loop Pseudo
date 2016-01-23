@@ -1,0 +1,20 @@
+For(Ever){
+	/*Process Sensor Info*/
+	Prox.GetData()
+	Tilt.GetData()
+	GPS.GetData()
+	if(tilted || obstacleTooClose){
+		STOP						//Wait for resume command?
+	}
+	
+	/*Recieve Move Command*/
+	XigbeeCommand.Get()
+	CommandParse()
+	
+	/*Send Move Command to Motors*/
+	Motor1.move(parsedCommand)
+	Motor2.move(parsedCommand)
+	
+	/*Send Relevant Data to Pi*/
+	XigbeeSend(tiltData, proxData, gpsData)
+}
